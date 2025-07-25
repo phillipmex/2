@@ -1,0 +1,224 @@
+{
+  "name": "Doña Malena - Auténtica Comida Mexicana",
+  "short_name": "Doña Malena",
+  "description": "Ordena comida mexicana auténtica en Mérida, Yucatán. Empanadas, panuchós, salbutes y más platillos tradicionales. Sistema de pedidos optimizado para móviles con integración WhatsApp.",
+  "start_url": "/",
+  "id": "/dona-malena-pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#FF0000",
+  "theme_color": "#228B22",
+  "lang": "es-MX",
+  "dir": "ltr",
+  "categories": ["food", "restaurant", "business", "shopping"],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
+  "screenshots": [
+    {
+      "src": "./images/screenshot-mobile-menu.png",
+      "sizes": "640x1136",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Menú principal con productos mexicanos auténticos"
+    },
+    {
+      "src": "./images/screenshot-mobile-cart.png",
+      "sizes": "640x1136", 
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Carrito de compras con integración WhatsApp"
+    },
+    {
+      "src": "./images/screenshot-mobile-ordering.png",
+      "sizes": "640x1136", 
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Proceso de pedido optimizado para móviles"
+    },
+    {
+      "src": "./images/screenshot-desktop-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Vista de escritorio del menú completo"
+    }
+  ],
+  "icons": [
+    {
+      "src": "./icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ver Menú Completo",
+      "short_name": "Menú",
+      "description": "Acceso directo al menú completo de comida mexicana",
+      "url": "/#menu",
+      "icons": [
+        {
+          "src": "./icons/shortcut-menu-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Hacer Pedido WhatsApp",
+      "short_name": "Pedido",
+      "description": "Realizar pedido directo por WhatsApp",
+      "url": "/#order",
+      "icons": [
+        {
+          "src": "./icons/shortcut-whatsapp-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Horarios y Ubicación",
+      "short_name": "Info",
+      "description": "Ver horarios de atención y ubicación en Mérida",
+      "url": "/#info",
+      "icons": [
+        {
+          "src": "./icons/shortcut-info-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Productos Populares",
+      "short_name": "Popular",
+      "description": "Acceso rápido a empanadas y panuchós",
+      "url": "/#popular",
+      "icons": [
+        {
+          "src": "./icons/shortcut-popular-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "web",
+      "url": "https://dona-malena.com",
+      "id": "com.donamalena.pwa"
+    }
+  ],
+  "prefer_related_applications": false,
+  "protocol_handlers": [
+    {
+      "protocol": "web+donamalena",
+      "url": "/order?item=%s"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/share-menu",
+      "accept": {
+        "image/*": [".png", ".jpg", ".jpeg", ".webp"],
+        "text/plain": [".txt"]
+      }
+    }
+  ],
+  "share_target": {
+    "action": "/share-order",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "menu_image",
+          "accept": ["image/*"]
+        }
+      ]
+    }
+  },
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "handle_links": "preferred",
+  "scope_extensions": [
+    {
+      "origin": "https://wa.me"
+    }
+  ],
+  "permissions": [
+    "camera",
+    "geolocation",
+    "notifications",
+    "persistent-storage"
+  ],
+  "features": [
+    "CrossOriginEmbedderPolicy",
+    "CrossOriginOpenerPolicy"
+  ]
+}

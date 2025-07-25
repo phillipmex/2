@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doña Malena - Auténtica Comida Mexicana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-red: #FF0000;
+            --deep-green: #228B22;
+            --golden-yellow: #FFD700;
+            --white: #FFFFFF;
+            --light-gray: #F5F5F5;
+            --dark-gray: #333333;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, var(--light-gray) 0%, #E8E8E8 100%);
+            color: var(--dark-gray);
+            padding-bottom: 80px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-red) 0%, #CC0000 100%);
+            color: var(--white);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .status-bar {
+            background: var(--deep-green);
+            padding: 10px;
+            margin: 10px -20px -10px -20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .status-open {
+            background: var(--deep-green);
+        }
+
+        .status-closed {
+            background: #DC3545;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section {
+            background: var(--white);
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--deep-green) 0%, #1F7A1F 100%);
+            color: var(--white);
+            padding: 15px 20px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #E0E0E0;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item:hover {
+            background-color: #F8F9FA;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 500;
+            font-size: 1rem;
+            color: var(--dark-gray);
+            margin-bottom: 2px;
+        }
+
+        .item-price {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-red);
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--primary-red);
+            background: var(--white);
+            color: var(--primary-red);
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+        }
+
+        .quantity-btn:hover, .quantity-btn:active {
+            background: var(--primary-red);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+
+        .quantity-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quantity-display {
+            min-width: 30px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, var(--deep-green) 0%, #1F7A1F 100%);
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+            min-width: 80px;
+        }
+
+        .add-btn:hover, .add-btn:active {
+            background: linear-gradient(135deg, #1F7A1F 0%, var(--deep-green) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 139, 34, 0.3);
+        }
+
+        .floating-cart {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .cart-btn {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--golden-yellow) 0%, #E6C200 100%);
+            color: var(--dark-gray);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            touch-action: manipulation;
+        }
+
+        .cart-btn:hover, .cart-btn:active {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+        }
+
+        .cart-counter {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--primary-red);
+            color: var(--white);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+
+        .cart-counter.show {
+            transform: scale(1);
+        }
+
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .cart-content {
+            background: var(--white);
+            border-radius: 12px;
+            max-width: 400px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .cart-header {
+            background: linear-gradient(135deg, var(--golden-yellow) 0%, #E6C200 100%);
+            color: var(--dark-gray);
+            padding: 20px;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .cart-items {
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: var(--primary-red);
+            font-weight: 600;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-total {
+            background: var(--light-gray);
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+        }
+
+        .cart-actions {
+            padding: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--deep-green) 0%, #1F7A1F 100%);
+            color: var(--white);
+        }
+
+        .btn-primary:hover, .btn-primary:active {
+            background: linear-gradient(135deg, #1F7A1F 0%, var(--deep-green) 100%);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6C757D;
+            color: var(--white);
+        }
+
+        .btn-secondary:hover, .btn-secondary:active {
+            background: #5A6268;
+            transform: translateY(-2px);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6C757D;
+        }
+
+        .empty-cart i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .info-section {
+            background: linear-gradient(135deg, var(--deep-green) 0%, #1F7A1F 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .info-section h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .info-section p {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-header {
+                font-size: 1.5rem;
+            }
+            
+            .menu-item {
+                padding: 12px 15px;
+            }
+            
+            .item-name {
+                font-size: 0.9rem;
+            }
+            
+            .quantity-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bounce {
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Doña Malena</h1>
+        <p>Auténtica Comida Mexicana</p>
+        <p><i class="fas fa-map-marker-alt"></i> Mérida, Yucatán</p>
+        <div class="status-bar" id="statusBar">
+            <i class="fas fa-clock"></i> <span id="statusText">Cargando horario...</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Food Section -->
+        <div class="section fade-in">
+            <div class="section-header">
+                <i class="fas fa-utensils"></i> Comida
+            </div>
+            <div id="foodMenu">
+                <!-- Food items will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Beverages Section -->
+        <div class="section fade-in">
+            <div class="section-header">
+                <i class="fas fa-glass-water"></i> Bebidas
+            </div>
+            <div id="beverageMenu">
+                <!-- Beverage items will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Restaurant Info -->
+        <div class="section fade-in">
+            <div class="info-section">
+                <h3><i class="fas fa-info-circle"></i> Información del Restaurante</h3>
+                <p><strong>Horarios:</strong> Martes a Domingo 6:30 AM - 12:00 PM</p>
+                <p><strong>Lunes:</strong> Cerrado</p>
+                <p><strong>Servicio:</strong> Solo para llevar</p>
+                <p><strong>Ubicación:</strong> Mérida, Yucatán, México</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Cart Button -->
+    <div class="floating-cart">
+        <button class="cart-btn" id="cartBtn" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <div class="cart-counter" id="cartCounter">0</div>
+        </button>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <i class="fas fa-shopping-cart"></i> Tu Pedido
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be populated by JavaScript -->
+            </div>
+            <div class="cart-total" id="cartTotal">
+                Total: $0
+            </div>
+            <div class="cart-actions">
+                <button class="btn btn-secondary" onclick="toggleCart()">Cerrar</button>
+                <button class="btn btn-primary" onclick="sendToWhatsApp()" id="orderBtn">
+                    <i class="fab fa-whatsapp"></i> Ordenar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Menu data
+        const menuData = {
+            food: [
+                { id: 'empanadas-carne', name: 'Empanadas con carne', price: 8 },
+                { id: 'empanadas-qhebra', name: 'Empanadas con Q.hebra', price: 10 },
+                { id: 'panuchos', name: 'Panuchós', price: 18 },
+                { id: 'salbutes', name: 'Salbutes', price: 18 },
+                { id: 'sopes', name: 'Sopes', price: 25 },
+                { id: 'polcanes-sencillos', name: 'Polcanes sencillos', price: 8 },
+                { id: 'polcanes-carne', name: 'Polcanes rellenos con carne', price: 20 },
+                { id: 'polcanes-carne-queso', name: 'Polcanes rellenos con carne y queso', price: 25 },
+                { id: 'tortas-bolillo', name: 'Tortas (Bolillo)', price: 35 },
+                { id: 'tortas-especiales', name: 'Tortas especiales(jamón, queso y pollo)', price: 38 },
+                { id: 'sandwiches', name: 'Sandwiches', price: 25 },
+                { id: 'sandwiches-especiales', name: 'Sandwiches especiales', price: 28 },
+                { id: 'hamburguesas-sencilla', name: 'Hamburguesas sencilla', price: 55 },
+                { id: 'hamburguesas-papas', name: 'Hamburguesas con papas', price: 65 },
+                { id: 'burritacos', name: 'Burritacos', price: 20 },
+                { id: 'burritas', name: 'Burritas', price: 15 }
+            ],
+            beverages: [
+                { id: 'coke-lite', name: 'Coke Lite 600ml', price: 30 },
+                { id: 'pepsi-light', name: 'Pepsi light', price: 35 },
+                { id: 'jamaica', name: 'Jamaica', price: 20 }
+            ]
+        };
+
+        // Cart system (using JavaScript variables, no localStorage)
+        let cart = {};
+        let cartTotal = 0;
+        let cartItemCount = 0;
+
+        // Restaurant status system
+        function updateRestaurantStatus() {
+            const now = new Date();
+            const day = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            const currentTime = hour + (minute / 60);
+
+            const statusBar = document.getElementById('statusBar');
+            const statusText = document.getElementById('statusText');
+
+            // Monday = 1 (closed), Tuesday = 2, Sunday = 0
+            const isMonday = day === 1;
+            const isOpenHours = currentTime >= 6.5 && currentTime < 12; // 6:30 AM to 12:00 PM
+
+            if (isMonday) {
+                statusBar.className = 'status-bar status-closed';
+                statusText.innerHTML = '<i class="fas fa-times-circle"></i> CERRADO - Lunes de descanso';
+            } else if (isOpenHours) {
+                statusBar.className = 'status-bar status-open';
+                statusText.innerHTML = '<i class="fas fa-check-circle"></i> ABIERTO - Solo para llevar';
+            } else {
+                statusBar.className = 'status-bar status-closed';
+                statusText.innerHTML = '<i class="fas fa-clock"></i> CERRADO - Horario: Martes a Domingo 6:30 AM - 12:00 PM';
+            }
+        }
+
+        // Initialize menu
+        function initializeMenu() {
+            const foodMenu = document.getElementById('foodMenu');
+            const beverageMenu = document.getElementById('beverageMenu');
+
+            // Populate food menu
+            menuData.food.forEach(item => {
+                const menuItem = createMenuItem(item);
+                foodMenu.appendChild(menuItem);
+            });
+
+            // Populate beverage menu
+            menuData.beverages.forEach(item => {
+                const menuItem = createMenuItem(item);
+                beverageMenu.appendChild(menuItem);
+            });
+        }
+
+        // Create menu item element
+        function createMenuItem(item) {
+            const menuItem = document.createElement('div');
+            menuItem.className = 'menu-item';
+            menuItem.innerHTML = `
+                <div class="item-info">
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-price">$${item.price}</div>
+                </div>
+                <div class="item-controls">
+                    <button class="quantity-btn" onclick="decreaseQuantity('${item.id}')" id="decrease-${item.id}">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <div class="quantity-display" id="quantity-${item.id}">0</div>
+                    <button class="quantity-btn" onclick="increaseQuantity('${item.id}')">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="add-btn" onclick="addToCart('${item.id}')" id="add-${item.id}">
+                        Agregar
+                    </button>
+                </div>
+            `;
+            return menuItem;
+        }
+
+        // Cart functions
+        function addToCart(itemId) {
+            const item = findItemById(itemId);
+            if (!item) return;
+
+            if (!cart[itemId]) {
+                cart[itemId] = { ...item, quantity: 0 };
+            }
+            
+            cart[itemId].quantity += 1;
+            updateQuantityDisplay(itemId);
+            updateCartUI();
+            animateAddToCart();
+        }
+
+        function increaseQuantity(itemId) {
+            const item = findItemById(itemId);
+            if (!item) return;
+
+            if (!cart[itemId]) {
+                cart[itemId] = { ...item, quantity: 0 };
+            }
+            
+            cart[itemId].quantity += 1;
+            updateQuantityDisplay(itemId);
+            updateCartUI();
+        }
+
+        function decreaseQuantity(itemId) {
+            if (!cart[itemId] || cart[itemId].quantity <= 0) return;
+            
+            cart[itemId].quantity -= 1;
+            
+            if (cart[itemId].quantity === 0) {
+                delete cart[itemId];
+            }
+            
+            updateQuantityDisplay(itemId);
+            updateCartUI();
+        }
+
+        function findItemById(itemId) {
+            return [...menuData.food, ...menuData.beverages].find(item => item.id === itemId);
+        }
+
+        function updateQuantityDisplay(itemId) {
+            const quantityElement = document.getElementById(`quantity-${itemId}`);
+            const decreaseButton = document.getElementById(`decrease-${itemId}`);
+            
+            const quantity = cart[itemId] ? cart[itemId].quantity : 0;
+            quantityElement.textContent = quantity;
+            
+            decreaseButton.disabled = quantity <= 0;
+        }
+
+        function updateCartUI() {
+            calculateCartTotals();
+            updateCartCounter();
+            updateCartModal();
+        }
+
+        function calculateCartTotals() {
+            cartTotal = 0;
+            cartItemCount = 0;
+            
+            Object.values(cart).forEach(item => {
+                cartTotal += item.price * item.quantity;
+                cartItemCount += item.quantity;
+            });
+        }
+
+        function updateCartCounter() {
+            const counter = document.getElementById('cartCounter');
+            counter.textContent = cartItemCount;
+            
+            if (cartItemCount > 0) {
+                counter.classList.add('show');
+            } else {
+                counter.classList.remove('show');
+            }
+        }
+
+        function updateCartModal() {
+            const cartItems = document.getElementById('cartItems');
+            const cartTotalElement = document.getElementById('cartTotal');
+            const orderBtn = document.getElementById('orderBtn');
+            
+            if (cartItemCount === 0) {
+                cartItems.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Tu carrito está vacío</p>
+                        <p>¡Agrega algunos platillos deliciosos!</p>
+                    </div>
+                `;
+                orderBtn.disabled = true;
+                orderBtn.style.opacity = '0.5';
+            } else {
+                cartItems.innerHTML = '';
+                Object.values(cart).forEach(item => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.innerHTML = `
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${item.price} x ${item.quantity} = $${item.price * item.quantity}</div>
+                        </div>
+                        <div class="cart-item-controls">
+                            <button class="quantity-btn" onclick="decreaseQuantity('${item.id}')">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <div class="quantity-display">${item.quantity}</div>
+                            <button class="quantity-btn" onclick="increaseQuantity('${item.id}')">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    `;
+                    cartItems.appendChild(cartItem);
+                });
+                orderBtn.disabled = false;
+                orderBtn.style.opacity = '1';
+            }
+            
+            cartTotalElement.textContent = `Total: $${cartTotal}`;
+        }
+
+        function toggleCart() {
+            const cartModal = document.getElementById('cartModal');
+            if (cartModal.style.display === 'flex') {
+                cartModal.style.display = 'none';
+            } else {
+                cartModal.style.display = 'flex';
+                updateCartModal();
+            }
+        }
+
+        function animateAddToCart() {
+            const cartBtn = document.getElementById('cartBtn');
+            cartBtn.classList.add('bounce');
+            setTimeout(() => {
+                cartBtn.classList.remove('bounce');
+            }, 600);
+        }
+
+        function sendToWhatsApp() {
+            if (cartItemCount === 0) return;
+            
+            const now = new Date();
+            const timestamp = now.toLocaleString('es-MX');
+            
+            let message = `*🌮 PEDIDO - DOÑA MALENA 🌮*\n\n`;
+            message += `📅 Fecha: ${timestamp}\n`;
+            message += `📍 Mérida, Yucatán\n\n`;
+            message += `*📋 DETALLES DEL PEDIDO:*\n`;
+            
+            Object.values(cart).forEach(item => {
+                message += `• ${item.name}\n`;
+                message += `  Cantidad: ${item.quantity}\n`;
+                message += `  Precio: $${item.price} c/u = $${item.price * item.quantity}\n\n`;
+            });
+            
+            message += `*💰 TOTAL: $${cartTotal}*\n\n`;
+            message += `*🚗 Servicio: SOLO PARA LLEVAR*\n`;
+            message += `⏰ Horario: Martes a Domingo 6:30 AM - 12:00 PM\n\n`;
+            message += `¡Gracias por elegir Doña Malena! 🙏`;
+            
+            const whatsappURL = `https://wa.me/5219988467737?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+        }
+
+        // Close cart when clicking outside
+        document.getElementById('cartModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleCart();
+            }
+        });
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMenu();
+            updateRestaurantStatus();
+            updateCartUI();
+            
+            // Update restaurant status every minute
+            setInterval(updateRestaurantStatus, 60000);
+            
+            // Add touch feedback for all buttons
+            document.querySelectorAll('button').forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                button.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+        });
+
+        // PWA service worker registration (ready for Phase 2)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // Service worker will be implemented in Phase 2
+                console.log('PWA ready for service worker implementation');
+            });
+        }
+    </script>
+</body>
+</html>

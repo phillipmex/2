@@ -1,0 +1,227 @@
+# 🚀 Guía de Despliegue Rápido - Doña Malena PWA
+
+## ⚡ Setup en 5 Minutos
+
+### Paso 1: Descargar Archivos ✅
+Guarda estos 6 archivos en una carpeta:
+- `index.html`
+- `styles.css` 
+- `script.js`
+- `sw.js`
+- `manifest.json`
+- `README.md`
+
+### Paso 2: Crear Iconos 🎨
+Crea una carpeta llamada `icons` y genera estos iconos con el logo del restaurante:
+
+**Herramientas recomendadas:**
+- [PWA Asset Generator](https://www.pwabuilder.com/imageGenerator)
+- [Favicon Generator](https://realfavicongenerator.net/)
+- [Canva](https://canva.com) - Para diseñar iconos
+
+**Iconos necesarios:**
+```
+icons/
+├── icon-72x72.png
+├── icon-96x96.png  
+├── icon-128x128.png
+├── icon-144x144.png
+├── icon-152x152.png
+├── icon-192x192.png    ← MUY IMPORTANTE
+├── icon-384x384.png
+├── icon-512x512.png    ← MUY IMPORTANTE
+├── favicon-16x16.png
+├── favicon-32x32.png
+└── apple-touch-icon.png
+```
+
+**Diseño sugerido:**
+- Fondo: Rojo (#FF0000) o Verde (#228B22)
+- Ícono: 🌮 o letra "D" estilizada
+- Texto: "Doña Malena" (si cabe)
+
+### Paso 3: Deploy Inmediato 🌐
+
+#### Opción A: Netlify (Más Fácil)
+1. Ve a [netlify.com](https://netlify.com)
+2. Arrastra toda la carpeta del proyecto
+3. ¡Ya está! Tu PWA estará online en segundos
+4. URL ejemplo: `https://fantastic-taco-123456.netlify.app`
+
+#### Opción B: Vercel
+1. Ve a [vercel.com](https://vercel.com)
+2. Conecta con GitHub o arrastra archivos
+3. Deploy automático
+4. URL ejemplo: `https://dona-malena.vercel.app`
+
+#### Opción C: GitHub Pages
+1. Sube archivos a repositorio de GitHub
+2. Settings → Pages → Deploy from main branch
+3. URL: `https://tu-usuario.github.io/dona-malena`
+
+### Paso 4: Verificar Funcionalidad ✅
+
+**Checklist básico:**
+- [ ] PWA abre correctamente en móvil
+- [ ] Se puede agregar productos al carrito
+- [ ] Botón de WhatsApp funciona
+- [ ] Horarios se muestran correctamente
+- [ ] Se puede instalar en dispositivo móvil
+
+**Test rápido:**
+1. Abre la URL en tu móvil
+2. Agrega una empanada al carrito
+3. Presiona el botón de WhatsApp
+4. Verifica que abre WhatsApp con el pedido
+
+### Paso 5: Personalización Opcional ⚙️
+
+#### Cambiar número de WhatsApp:
+En `script.js`, línea 580:
+```javascript
+const whatsappNumber = '5219988467737'; // Tu número aquí
+```
+
+#### Modificar horarios:
+En `script.js`, función `updateRestaurantStatus()`:
+```javascript
+const isOpenHours = currentTime >= 6.5 && currentTime < 12; // 6:30 AM - 12:00 PM
+```
+
+#### Actualizar precios:
+En `script.js`, objeto `menuData`, modifica los precios:
+```javascript
+{ id: 'empanadas-carne', name: 'Empanadas con carne', price: 8 }
+```
+
+---
+
+## 🛠️ Solución de Problemas Comunes
+
+### ❌ "PWA no se instala"
+**Causa:** Falta HTTPS o iconos
+**Solución:** 
+- Usar Netlify/Vercel (HTTPS automático)
+- Verificar iconos 192x192 y 512x512 presentes
+
+### ❌ "WhatsApp no abre"
+**Causa:** Número incorrecto o navegador
+**Solución:**
+- Verificar número: formato +52 999 846 7737
+- Probar en dispositivo real (no emulador)
+
+### ❌ "Carrito se pierde al refrescar"
+**Causa:** Comportamiento normal
+**Solución:** Es por diseño, no usa localStorage
+
+### ❌ "Horarios incorrectos"
+**Causa:** Zona horaria
+**Solución:** Verificar zona horaria en `script.js`
+
+---
+
+## 📱 Pruebas en Dispositivos
+
+### Android
+1. Chrome → Menú → "Agregar a pantalla de inicio"
+2. Ícono aparece como app nativa
+3. Abre sin barra del navegador
+
+### iOS (iPhone/iPad)
+1. Safari → Botón compartir
+2. "Agregar a pantalla de inicio"
+3. Funciona como app nativa
+
+### Desktop
+1. Chrome → Ícono de instalación en URL
+2. "Instalar Doña Malena"
+3. Se abre como ventana independiente
+
+---
+
+## 🎯 Configuración para Producción
+
+### Dominio Personalizado
+1. **Netlify:** Settings → Domain management → Add custom domain
+2. **Vercel:** Settings → Domains → Add domain
+3. Configurar DNS según instrucciones
+
+### Analytics (Opcional)
+Agregar Google Analytics en `index.html`:
+```html
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_TRACKING_ID');
+</script>
+```
+
+### Backup del Código
+1. Crear repositorio en GitHub
+2. Subir todos los archivos
+3. Hacer commits regulares para cambios
+
+---
+
+## 📞 Lista de Contactos
+
+### Servicios de Hosting
+- **Netlify Support:** [support.netlify.com](https://support.netlify.com)
+- **Vercel Help:** [vercel.com/help](https://vercel.com/help)
+- **GitHub Pages:** [docs.github.com/pages](https://docs.github.com/pages)
+
+### Herramientas de Testing
+- **PWA Testing:** [www.pwabuilder.com](https://www.pwabuilder.com)
+- **Mobile Testing:** [developers.google.com/web/tools/chrome-devtools/device-mode](https://developers.google.com/web/tools/chrome-devtools/device-mode)
+
+---
+
+## ✅ Checklist Final
+
+Antes de entregar a Doña Malena:
+
+**Funcionalidad:**
+- [ ] Todos los 19 productos aparecen correctamente
+- [ ] Precios son exactos ($8 a $65)
+- [ ] Carrito suma correctamente
+- [ ] WhatsApp abre con pedido formateado
+- [ ] Horarios automáticos funcionan
+- [ ] PWA se instala en móvil
+
+**Contenido:**
+- [ ] Nombre "Doña Malena" correcto
+- [ ] Ubicación "Mérida, Yucatán" presente
+- [ ] Número de WhatsApp correcto
+- [ ] Texto en español
+- [ ] Información de horarios actualizada
+
+**Técnico:**
+- [ ] HTTPS funcionando
+- [ ] Service Worker registrado
+- [ ] Manifest.json válido
+- [ ] Iconos de todos los tamaños
+- [ ] Responsive en móviles
+- [ ] Velocidad de carga < 3 segundos
+
+**Entrega:**
+- [ ] URL del PWA funcionando
+- [ ] Instrucciones de uso para el restaurante
+- [ ] Código fuente respaldado
+- [ ] Documentación completa
+
+---
+
+## 🎉 ¡Listo para Usar!
+
+Una vez completados estos pasos, Doña Malena tendrá:
+
+✅ **PWA profesional** instalable en móviles  
+✅ **Sistema de pedidos** integrado con WhatsApp  
+✅ **Horarios automáticos** que se actualizan solos  
+✅ **Carrito funcional** con todos los productos  
+✅ **Diseño mexicano** optimizado para Mérida, Yucatán  
+
+**¡El restaurante puede empezar a recibir pedidos inmediatamente!** 🌮📱
